@@ -1,0 +1,21 @@
+{
+  "name": "project_server",
+  "version": "1.0.0",
+  "description": "This is to write what the server does",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "keywords": [
+    "key",
+    "words",
+    "about",
+    "this",
+    "program/server"
+  ],
+  "author": "author or authors who wrote this program",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

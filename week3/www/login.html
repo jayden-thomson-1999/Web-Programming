@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Workshop 3</title>
+    <link rel='stylesheet' href='/login.css'>
+    <script 
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+  </head>
+  <body>
+    <h1>Login Page</h1>
+    <form id='login-form'>
+      Username:<br>
+      <input id='email' type="email"><br>
+      Password:<br>
+      <input id='password' type="password"><br><br>
+      <input id='submit' type='submit' value='Submit'>
+    </form>
+    <div id="errormsg" class="hidemessage">User credentials do not match</div>
+  </body>
+  <script src='/login_submit.js'></script>
+</html>
