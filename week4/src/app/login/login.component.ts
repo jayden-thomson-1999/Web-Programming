@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 const users = {
   'johndoe@domain.com': 'password',
@@ -14,8 +15,9 @@ const users = {
 export class LoginComponent implements OnInit {
   private email = '';
   private password = '';
+  private error = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,10 +28,14 @@ export class LoginComponent implements OnInit {
 
     if (users.hasOwnProperty(this.email)) {
       if (this.password === users[this.email]) {
-          ok = true;
+        ok = true;
       }
     }
 
-    console.log(ok);
+    if (ok) {
+      this.router.navigateByUrl('/account');
+    } else {
+      this.error = true;
+    }
   }
 }
