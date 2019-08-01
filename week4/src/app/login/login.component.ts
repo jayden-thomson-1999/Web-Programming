@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 const users = {
   'johndoe@domain.com': 'password',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   private email = '';
   private password = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
     if (users.hasOwnProperty(this.email)) {
       if (this.password === users[this.email]) {
           ok = true;
+          this.router.navigate(['account']);
       }
     }
 
