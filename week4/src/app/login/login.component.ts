@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 
+
 const users = {
   'johndoe@domain.com': 'password',
   'janedoe@domain.com': 'qwerty',
@@ -16,6 +17,7 @@ const users = {
 export class LoginComponent implements OnInit {
   private email = '';
   private password = '';
+  private error = false;
 
   constructor(private router: Router) { }
 
@@ -33,6 +35,10 @@ export class LoginComponent implements OnInit {
       }
     }
 
-    console.log(ok);
+    if (ok) {
+      this.router.navigateByUrl('/account');
+    } else {
+      this.error = true;
+    }
   }
 }
