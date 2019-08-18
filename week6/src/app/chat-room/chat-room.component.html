@@ -1,3 +1,11 @@
+<div class="bg-light">
+  <div class="input-group mb-3">
+    <input [(ngModel)]="messageIn" name="messageIn" type="text" class="form-control" placeholder="Message Chat" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button">Send</button>
+    </div>
+  </div>
+</div>
 
 <div class="overflow-auto">
   <ul id="message-list" class="list-group">
@@ -5,11 +13,12 @@
   </ul>
 </div>
 
-<div class="fixed-bottom bg-light">
+<!-- Tried Making it stay at bottom but could not get scroll section to scroll from bottom up -->
+<!-- <div class="fixed-bottom bg-light">
   <div class="input-group mb-3">
     <input type="text" class="form-control" placeholder="Message Chat" aria-describedby="basic-addon2">
     <div class="input-group-append">
       <button class="btn btn-outline-secondary" type="button">Send</button>
     </div>
   </div>
-</div>
+</div> -->

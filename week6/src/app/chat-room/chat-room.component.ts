@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-room.component.css']
 })
 export class ChatRoomComponent implements OnInit {
-  private messages;
+  private messages: string[];
+  private messageIn: string;
 
   constructor() {
     this.messages = [
