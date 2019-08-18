@@ -1,3 +1,15 @@
-<p>
-  chat-room works!
-</p>
+
+<div id="message-board">
+  <ul class="list-group">
+    <li *ngFor="let message of messages" class="list-group-item">{{message}}</li>
+  </ul>
+</div>
+
+<div id="message-input">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Message Chat" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button">Send</button>
+    </div>
+  </div>
+</div>
