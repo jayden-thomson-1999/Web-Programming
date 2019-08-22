@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatRoomSocketService } from '../services/chat-room-socket.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -6,115 +7,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-room.component.css']
 })
 export class ChatRoomComponent implements OnInit {
-  private messages: string[];
+  private messages: string[] = [];
   private messageIn: string;
+  private ioConnection: any;
 
-  constructor() {
-    this.messages = [
-      'faucibus leo, in lobortis tellus justo sit amet nulla',
-      'tempus risus. Donec egestas. Duis ac arcu. Nunc mauri',
-      'sodales purus, in molestie tortor nibh sit amet orci.',
-      'urna justo faucibus lectus, a sollicitudin orci sem e',
-      'mauris elit, dictum eu, eleifend nec, malesuada ut, s',
-      'ut odio vel est tempor bibendum. Donec felis orci, ad',
-      'interdum ligula eu enim. Etiam imperdiet dictum magna',
-      'dolor, tempus non, lacinia at, iaculis quis, pede. Pr',
-      'faucibus lectus, a sollicitudin orci sem eget massa. ',
-      'mi fringilla mi lacinia mattis. Integer eu lacus. Qui',
-      'fermentum metus. Aenean sed pede nec ante blandit viv',
-      'ornare tortor at risus. Nunc ac sem ut dolor dapibus"',
-      'ornare lectus justo eu arcu. Morbi sit amet massa. Qu',
-      'vitae aliquam eros turpis non enim. Mauris quis turpi',
-      'dictum. Phasellus in felis. Nulla tempor augue ac ips',
-      'ultrices a, auctor non, feugiat nec, diam. Duis mi en',
-      'penatibus et magnis dis parturient montes, nascetur r',
-      'sed libero. Proin sed turpis nec mauris blandit matti',
-      'Nullam vitae diam. Proin dolor. Nulla semper tellus i',
-      'nibh lacinia orci, consectetuer euismod est arcu ac o',
-      'Phasellus vitae mauris sit amet lorem semper auctor. ',
-      'elit pede, malesuada vel, venenatis vel, faucibus id,',
-      'arcu. Sed et libero. Proin mi. Aliquam gravida mauris',
-      'Nunc sollicitudin commodo ipsum. Suspendisse non leo.',
-      'dis parturient montes, nascetur ridiculus mus. Donec ',
-      'arcu imperdiet ullamcorper. Duis at lacus. Quisque pu',
-      'ligula consectetuer rhoncus. Nullam velit dui, semper',
-      'et, rutrum non, hendrerit id, ante. Nunc mauris sapie',
-      'lacus, varius et, euismod et, commodo at, libero. Mor',
-      'posuere vulputate, lacus. Cras interdum. Nunc sollici',
-      'gravida sit amet, dapibus id, blandit at, nisi. Cum s',
-      'pede. Suspendisse dui. Fusce diam nunc, ullamcorper e',
-      'pede, ultrices a, auctor non, feugiat nec, diam. Duis',
-      'mi pede, nonummy ut, molestie in, tempus eu, ligula. ',
-      'orci lacus vestibulum lorem, sit amet ultricies sem m',
-      'tellus lorem eu metus. In lorem. Donec elementum, lor',
-      'luctus vulputate, nisi sem semper erat, in consectetu',
-      'eros nec tellus. Nunc lectus pede, ultrices a, auctor',
-      'a felis ullamcorper viverra. Maecenas iaculis aliquet',
-      'augue eu tellus. Phasellus elit pede, malesuada vel, ',
-      'magnis dis parturient montes, nascetur ridiculus mus.',
-      'augue scelerisque mollis. Phasellus libero mauris, al',
-      'Quisque libero lacus, varius et, euismod et, commodo ',
-      'Sed et libero. Proin mi. Aliquam gravida mauris ut mi',
-      'velit. Sed malesuada augue ut lacus. Nulla tincidunt,',
-      'elit. Nulla facilisi. Sed neque. Sed eget lacus. Maur',
-      'Donec est mauris, rhoncus id, mollis nec, cursus a, e',
-      'at, velit. Cras lorem lorem, luctus ut, pellentesque ',
-      'sed orci lobortis augue scelerisque mollis. Phasellus',
-      'neque pellentesque massa lobortis ultrices. Vivamus r',
-      'sem, vitae aliquam eros turpis non enim. Mauris quis ',
-      'luctus vulputate, nisi sem semper erat, in consectetu',
-      'pharetra nibh. Aliquam ornare, libero at auctor ullam',
-      'nonummy ipsum non arcu. Vivamus sit amet risus. Donec',
-      'scelerisque mollis. Phasellus libero mauris, aliquam ',
-      'montes, nascetur ridiculus mus. Proin vel nisl. Quisq',
-      'id magna et ipsum cursus vestibulum. Mauris magna. Du',
-      'In at pede. Cras vulputate velit eu sem. Pellentesque',
-      'velit justo nec ante. Maecenas mi felis, adipiscing f',
-      'malesuada id, erat. Etiam vestibulum massa rutrum mag',
-      'ligula. Aliquam erat volutpat. Nulla dignissim. Maece',
-      'nunc interdum feugiat. Sed nec metus facilisis lorem ',
-      'amet risus. Donec egestas. Aliquam nec enim. Nunc ut ',
-      'sapien, cursus in, hendrerit consectetuer, cursus et,',
-      'egestas ligula. Nullam feugiat placerat velit. Quisqu',
-      'consequat purus. Maecenas libero est, congue a, aliqu',
-      'eu nulla at sem molestie sodales. Mauris blandit enim',
-      'sapien imperdiet ornare. In faucibus. Morbi vehicula.',
-      'eget ipsum. Suspendisse sagittis. Nullam vitae diam. ',
-      'tellus eu augue porttitor interdum. Sed auctor odio a',
-      'pharetra nibh. Aliquam ornare, libero at auctor ullam',
-      'in faucibus orci luctus et ultrices posuere cubilia C',
-      'diam eu dolor egestas rhoncus. Proin nisl sem, conseq',
-      'mattis velit justo nec ante. Maecenas mi felis, adipi',
-      'hendrerit. Donec porttitor tellus non magna. Nam ligu',
-      'Fusce feugiat. Lorem ipsum dolor sit amet, consectetu',
-      'hendrerit. Donec porttitor tellus non magna. Nam ligu',
-      'bibendum sed, est. Nunc laoreet lectus quis massa. Ma',
-      'primis in faucibus orci luctus et ultrices posuere cu',
-      'lobortis risus. In mi pede, nonummy ut, molestie in, ',
-      'Donec feugiat metus sit amet ante. Vivamus non lorem ',
-      'nulla ante, iaculis nec, eleifend non, dapibus rutrum',
-      'Lorem ipsum dolor sit amet, consectetuer adipiscing e',
-      'gravida. Aliquam tincidunt, nunc ac mattis ornare, le',
-      'auctor velit. Aliquam nisl. Nulla eu neque pellentesq',
-      'dui, nec tempus mauris erat eget ipsum. Suspendisse s',
-      'aliquet diam. Sed diam lorem, auctor quis, tristique ',
-      'ante ipsum primis in faucibus orci luctus et ultrices',
-      'tellus, imperdiet non, vestibulum nec, euismod in, do',
-      'Curae; Phasellus ornare. Fusce mollis. Duis sit amet ',
-      'vel, faucibus id, libero. Donec consectetuer mauris i',
-      'at, libero. Morbi accumsan laoreet ipsum. Curabitur c',
-      'erat. Vivamus nisi. Mauris nulla. Integer urna. Vivam',
-      'ridiculus mus. Proin vel arcu eu odio tristique phare',
-      'fringilla purus mauris a nunc. In at pede. Cras vulpu',
-      'urna et arcu imperdiet ullamcorper. Duis at lacus. Qu',
-      'inceptos hymenaeos. Mauris ut quam vel sapien imperdi',
-      'ut, sem. Nulla interdum. Curabitur dictum. Phasellus ',
-      'convallis dolor. Quisque tincidunt pede ac urna. Ut t',
-      'Vestibulum ante ipsum primis in faucibus orci luctus'
-    ];
-  }
+  constructor(private socketService: ChatRoomSocketService) { }
 
   ngOnInit() {
+    this.socketService.initSocket();
+    this.ioConnection = this.socketService.onMessage()
+      .subscribe((message: string) => {
+        // add new message to the messages array
+        this.messages.push(message);
+      });
   }
 
+  private chat() {
+    if (this.messageIn) {
+      // check there is a message
+      this.socketService.send(this.messageIn);
+      this.messageIn = null;
+    } else {
+      console.log('no message');
+    }
+  }
 }

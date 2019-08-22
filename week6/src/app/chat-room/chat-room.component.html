@@ -2,7 +2,7 @@
   <div class="input-group mb-3">
     <input [(ngModel)]="messageIn" name="messageIn" type="text" class="form-control" placeholder="Message Chat" aria-describedby="basic-addon2">
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Send</button>
+      <button (click)="chat()" class="btn btn-outline-secondary" type="button">Send</button>
     </div>
   </div>
 </div>
