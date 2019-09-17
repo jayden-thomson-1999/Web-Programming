@@ -6,14 +6,16 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.3.2"
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^6.2.0"
   },
   "scripts": {
-    "unitTest": "mocha ./unitTests/test.js",
-    "integrationTest": "mocha ./integrationTests/test.js"
+    "unitTest": "mocha ./unitTests/test.js"
   },
   "author": "",
   "license": "ISC"
