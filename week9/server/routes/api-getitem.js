@@ -1,5 +1,5 @@
-module.exports = function(db, app) {
-    app.get('/api/getitem', function(req, res) {
+module.exports = function(db, app, ObjectID) {
+    app.post('/api/getitem', function(req, res) {
         if (!req.body) return res.sendStatus(400);
 
         let productID = req.body.productid;
