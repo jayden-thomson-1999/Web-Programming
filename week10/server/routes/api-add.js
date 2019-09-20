@@ -5,6 +5,8 @@ module.exports = function(app) {
 
         dbSettings.MongoClient.connect(dbSettings.url, {poolSize:10,useNewUrlParser: true,
             useUnifiedTopology: true},function(err, client) {
+            if(err) throw new Error(err);
+
             const dbName = 'mydb';
             const db = client.db(dbName);
             product = req.body;
