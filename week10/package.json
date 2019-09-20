@@ -15,7 +15,8 @@
     "mocha": "^6.2.0"
   },
   "scripts": {
-    "unitTest": "mocha ./unitTests/test.js"
+    "unitTest": "mocha ./unitTests/test.js",
+    "integrationTest": "mocha ./integrationTests/test.js"
   },
   "author": "",
   "license": "ISC"
