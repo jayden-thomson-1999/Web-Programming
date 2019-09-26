@@ -16,7 +16,7 @@
   },
   "scripts": {
     "unitTest": "mocha ./unitTests/test.js",
-    "integrationTest": "mocha ./integrationTests/test.js"
+    "integrationTest": "mocha ./integrationTests/test.js --timeout 10000"
   },
   "author": "",
   "license": "ISC"

@@ -122,5 +122,34 @@ describe('Server test', function() {
                     done();
                 });
         });
+
+        it("should return object", done => {
+            chai.request(app).post('/api/update').type("form")
+            .send(testUpdate)
+            .end((err, res) => {
+                res.body.should.be.a('object');
+                done();
+            });
+        });
+    });
+
+    describe('/api/validid', function() {
+        it("should have 200 status", function(done) {
+            chai.request(app).post('/api/checkvalid').type("form")
+                .send(testUpdate)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+
+        it("should return a success property of type number", function(done) {
+            chai.request(app).post('/api/checkvalid').type("form")
+                .send(testUpdate)
+                .end((err, res) => {
+                    res.body.success.should.be.a('number');
+                    done();
+                });
+        });
     });
 });
